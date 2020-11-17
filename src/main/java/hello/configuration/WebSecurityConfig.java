@@ -18,7 +18,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/auth/**").permitAll();
     }
 
-
     /*
     // 鉴权提供的 一个 假的用户  他可以通过鉴权
     @Bean
