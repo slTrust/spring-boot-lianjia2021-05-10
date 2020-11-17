@@ -73,6 +73,21 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/auth/logout")
+    @ResponseBody
+    public Result logout(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User loginedInUser = userService.getUserByUsername(username);
+
+        if(loginedInUser == null){
+            return new Result("ok","用户未登录",false);
+        }else{
+            SecurityContextHolder.clearContext();
+            return new Result("ok","注销成功",false);
+        }
+    }
+
     // 还可以直接拿到 map格式的 自动将请求的json 转换为 map
     @PostMapping("auth/login")
     @ResponseBody
