@@ -2,6 +2,7 @@ package hello.controller;
 
 import hello.entity.User;
 import hello.service.UserService;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,8 +29,6 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
     }
 
-
-
     @GetMapping("/auth")
     @ResponseBody
     public Object auth(){
@@ -40,7 +39,7 @@ public class AuthController {
         if(loginedInUser == null){
             return new Result("ok","用户未登录",false);
         }else{
-            return new Result("ok","",true,loginedInUser);
+            return new Result("ok",null,true,loginedInUser);
         }
 
     }
@@ -63,14 +62,13 @@ public class AuthController {
             return new Result("fail","invalid password",false);
         }
 
-        User user = userService.getUserByUsername(username);
-
-        if(user == null){
+        try{
             userService.save(username,password);
-            return new Result("ok","success!",false);
-        }else{
+        }catch (DuplicateKeyException e){
+            e.printStackTrace();
             return new Result("fail","user already exists",false);
         }
+        return  new Result("ok","success!",false);
     }
 
     @GetMapping("/auth/logout")
