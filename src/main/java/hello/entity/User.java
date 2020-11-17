@@ -1,5 +1,7 @@
 package hello.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.Instant;
 
 
@@ -36,6 +38,7 @@ public class User {
         this.username = username;
     }
 
+    @JsonIgnore
     public String getEncryptedPassword() {
         return encryptedPassword;
     }
