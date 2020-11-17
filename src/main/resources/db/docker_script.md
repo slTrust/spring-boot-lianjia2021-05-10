@@ -36,3 +36,16 @@ create table user(id int ,name varchar(10));
 插入一条数据
 insert into user(id,name) values(1,"张三");
 ```
+
+### 修改数据库表
+
+```
+create table user(
+  id int primary key auto_increment,
+  username varchar(10),
+  encrypted_password varchar(100),
+  avatar varchar(100),
+  created_at datetime,
+  updated_at datetime
+)
+```

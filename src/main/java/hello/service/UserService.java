@@ -8,9 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import hello.entity.User;
+
+import javax.inject.Inject;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -18,34 +18,31 @@ public class UserService implements UserDetailsService {
     // 密码加密器
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    // ConcurrentHashMap 是线程安全的 HashMap 线程不安全
-    private Map<String,User> users = new ConcurrentHashMap<>();
     private UserMapper userMapper;
 
-
-    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder) {
+    @Inject
+    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder,UserMapper userMapper) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        save("aaa","111");
+        this.userMapper = userMapper;
+        // 第一次启动的时候录入，下次启动的时候注释掉。
+        //save("aaa","111");
     }
 
     public void save(String username, String password){
-        users.put(username,new User(1,username,bCryptPasswordEncoder.encode(password)));
+        userMapper.save(username,bCryptPasswordEncoder.encode(password));
     }
 
     public User getUserByUsername(String username){
-        return users.get(username);
+        return userMapper.findUserByUsername(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if(!users.containsKey(username)){
+        User user = getUserByUsername(username);
+        if(user == null){
             throw new UsernameNotFoundException( username + "不存在!");
         }
 
-        // 获取的是加密后的密码
-        User user = users.get(username);
-
-        // spring 提供的鉴权 User
         return new org.springframework.security.core.userdetails.User(username,user.getEncryptedPassword(), Collections.emptyList());
     }
 }
