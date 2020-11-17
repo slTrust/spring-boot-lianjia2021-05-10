@@ -1,5 +1,6 @@
 package hello.controller;
 
+import hello.entity.Result;
 import hello.entity.User;
 import hello.service.UserService;
 import org.springframework.dao.DuplicateKeyException;
@@ -39,7 +40,7 @@ public class AuthController {
         if(loginedInUser == null){
             return new Result("ok","用户未登录",false);
         }else{
-            return new Result("ok",null,true,loginedInUser);
+            return new Result("ok","",true,loginedInUser);
         }
 
     }
@@ -66,9 +67,9 @@ public class AuthController {
             userService.save(username,password);
         }catch (DuplicateKeyException e){
             e.printStackTrace();
-            return new Result("fail","user already exists",false);
+            return Result.failure("user already exists");
         }
-        return  new Result("ok","success!",false);
+        return new Result("ok","success!",false);
     }
 
     @GetMapping("/auth/logout")
@@ -98,7 +99,7 @@ public class AuthController {
         try{
             userDetails = userService.loadUserByUsername(username);
         }catch (UsernameNotFoundException e) {
-            return new Result("fail","用户不存在",false);
+            return Result.failure("用户不存在");
         }
 
         // 比对账号密码
@@ -114,44 +115,11 @@ public class AuthController {
             return new Result("ok","登录成功",true,userService.getUserByUsername(username));
         }catch (BadCredentialsException e){
             // 鉴权识别就会抛出这个异常
-            return new Result("fail","密码不正确",false);
+            return Result.failure("密码不正确");
         }
 
     }
 
-    private static class Result{
-        String status;
-        String msg;
-        boolean isLogin;
-        Object data;
-
-        public Result(String status, String msg, boolean isLogin) {
-            this(status,msg,isLogin,null);
-        }
-
-        public Result(String status, String msg, boolean isLogin, Object data) {
-            this.status = status;
-            this.msg = msg;
-            this.isLogin = isLogin;
-            this.data = data;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public boolean isLogin() {
-            return isLogin;
-        }
-
-        public Object getData() {
-            return data;
-        }
-    }
 
 }
 
