@@ -45,14 +45,33 @@ public class AuthController {
 
     }
 
+    @PostMapping("/auth/register")
+    @ResponseBody
+    public Result register(@RequestBody Map<String,Object> usernameAndPassword){
+        String username = usernameAndPassword.get("username").toString();
+        String password = usernameAndPassword.get("password").toString();
 
-    /*
-    @PostMapping("/auth/login")
-    public void login(@RequestBody String usernameAndPwd){
-        System.out.println(usernameAndPwd);
-        // 这里返回的 json字符串
+        if( username == null || password == null){
+            return new Result("fail","username/password == null",false);
+        }
+
+        if( username.length() < 1 || username.length() > 15){
+            return new Result("fail","invalid username",false);
+        }
+
+        if( password.length() < 6 || password.length() > 15){
+            return new Result("fail","invalid password",false);
+        }
+
+        User user = userService.getUserByUsername(username);
+
+        if(user == null){
+            userService.save(username,password);
+            return new Result("ok","success!",false);
+        }else{
+            return new Result("fail","user already exists",false);
+        }
     }
-    */
 
     // 还可以直接拿到 map格式的 自动将请求的json 转换为 map
     @PostMapping("auth/login")

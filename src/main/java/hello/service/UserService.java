@@ -24,8 +24,6 @@ public class UserService implements UserDetailsService {
     public UserService(BCryptPasswordEncoder bCryptPasswordEncoder,UserMapper userMapper) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userMapper = userMapper;
-        // 第一次启动的时候录入，下次启动的时候注释掉。
-        //save("aaa","111");
     }
 
     public void save(String username, String password){
