@@ -21,7 +21,7 @@ public class HelloController {
     @RequestMapping("/")
     public User index() {
         System.out.println();
-        return userService.getUserById(1);
+        return null;
     }
 
 }
