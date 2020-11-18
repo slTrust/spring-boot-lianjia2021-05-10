@@ -128,6 +128,73 @@
                     <password>my-secret-pw</password>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <!-- 给这个命令起一个名字 -->
+                        <id>start-test-database</id>
+                        <!-- 绑定到某一阶段 -->
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <longModulepath>false</longModulepath>
+                            <!-- 可执行程序 -->
+                            <executable>docker</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>--name</argument>
+                                <argument>test-mysql</argument>
+                                <argument>-e</argument>
+                                <argument>MYSQL_ROOT_PASSWORD=my-secret-pw</argument>
+                                <argument>-e</argument>
+                                <argument>MYSQL_DATABASE=xdml</argument>
+                                <argument>-p</argument>
+                                <argument>3307:3306</argument>
+                                <argument>-d</argument>
+                                <argument>mysql</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>wait-test-database</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <longModulepath>false</longModulepath>
+                            <executable>sleep</executable>
+                            <arguments>
+                                <argument>20</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>teardown-database</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <longModulepath>false</longModulepath>
+                            <executable>docker</executable>
+                            <arguments>
+                                <argument>rm</argument>
+                                <argument>-f</argument>
+                                <argument>test-mysql</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
