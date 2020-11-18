@@ -192,7 +192,7 @@
                 <version>5.2.4</version>
                 <configuration>
                     <!-- 正式数据库 -->
-                    <url>jdbc:mysql://localhost:3306/xdml</url>
+                    <url>jdbc:mysql://localhost:3306/xdml?useSSL=false&amp;allowPublicKeyRetrieval=true</url>
                     <user>root</user>
                     <password>my-secret-pw</password>
                 </configuration>
@@ -205,7 +205,7 @@
                         </goals>
                         <configuration>
                             <!-- 测试数据库  -->
-                            <url>jdbc:mysql://localhost:3307/xdml</url>
+                            <url>jdbc:mysql://localhost:3307/xdml?useSSL=false&amp;allowPublicKeyRetrieval=true</url>
                             <user>root</user>
                             <password>my-secret-pw</password>
                         </configuration>
