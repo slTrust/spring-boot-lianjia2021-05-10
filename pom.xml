@@ -119,17 +119,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.flywaydb</groupId>
-                <artifactId>flyway-maven-plugin</artifactId>
-                <version>5.2.4</version>
-                <configuration>
-                    <url>jdbc:mysql://localhost:3306/xdml</url>
-                    <user>root</user>
-                    <password>my-secret-pw</password>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
@@ -191,6 +180,34 @@
                                 <argument>-f</argument>
                                 <argument>test-mysql</argument>
                             </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- flyway 放在后面是为了，mvn verify 的时候保证 maven exex里的测试数据库启动了，然后初始化表-->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>5.2.4</version>
+                <configuration>
+                    <!-- 正式数据库 -->
+                    <url>jdbc:mysql://localhost:3306/xdml</url>
+                    <user>root</user>
+                    <password>my-secret-pw</password>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>test-database-setup</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                        <configuration>
+                            <!-- 测试数据库  -->
+                            <url>jdbc:mysql://localhost:3307/xdml</url>
+                            <user>root</user>
+                            <password>my-secret-pw</password>
                         </configuration>
                     </execution>
                 </executions>
