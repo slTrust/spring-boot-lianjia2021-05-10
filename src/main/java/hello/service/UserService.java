@@ -1,6 +1,6 @@
 package hello.service;
 
-import hello.mapper.UserMapper;
+import hello.dao.UserMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
