@@ -3,7 +3,6 @@ package hello.service;
 import hello.dao.BlogDao;
 import hello.entity.Blog;
 import hello.entity.BlogResult;
-import hello.entity.User;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -24,11 +23,6 @@ public class BlogService {
        try{
            List<Blog> blogs = blogDao.getBlogs(page,pageSize,userId);
 
-           // 这个方式 非常非常没有效率 ，仅供测试使用
-           blogs.forEach(blog->{
-               User user = userService.getUserById(blog.getUserId());
-               blog.setUser(user);
-           });
            int count = blogDao.count(userId);
 
            int pageCount = count%pageSize == 0 ? count / pageSize :count / pageSize + 1;
