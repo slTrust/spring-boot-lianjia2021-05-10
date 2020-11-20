@@ -80,3 +80,17 @@ create table blog(
 ```
 
 - `mvn flyway:migrate`
+
+### 录入数据
+
+```$xslt
+insert into blog(id,user_id,title,description,content,created_at,updated_at)
+values (1,1,'title1','desc1','content1',now(),now());
+insert into blog(id,user_id,title,description,content,created_at,updated_at)
+values (2,1,'title2','desc2','content2',now(),now());
+insert into blog(id,user_id,title,description,content,created_at,updated_at)
+values (3,2,'title3','desc1','content1',now(),now());
+insert into blog(id,user_id,title,description,content,created_at,updated_at)
+values (4,2,'title4','desc2','content2',now(),now());
+
+```
