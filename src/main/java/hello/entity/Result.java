@@ -1,24 +1,21 @@
 package hello.entity;
 
-public class Result {
+public abstract class Result<T> {
     String status;
     String msg;
-    boolean isLogin;
-    Object data;
+    T data;
 
-    public static Result failure(String message){
-        return new Result("fail",message,false);
+//    public static Result failure(String message){
+//        return new Result("fail",message,false);
+//    }
+
+    protected Result(String status, String msg) {
+        this(status,msg,null);
     }
 
-    // 改为 private 这样 所有 fail 的结果都是你预期的
-    public Result(String status, String msg, boolean isLogin) {
-        this(status,msg,isLogin,null);
-    }
-
-    public Result(String status, String msg, boolean isLogin, Object data) {
+    protected Result(String status, String msg, T data) {
         this.status = status;
         this.msg = msg;
-        this.isLogin = isLogin;
         this.data = data;
     }
 
@@ -30,11 +27,7 @@ public class Result {
         return msg;
     }
 
-    public boolean isLogin() {
-        return isLogin;
-    }
-
-    public Object getData() {
+    public T getData() {
         return data;
     }
 }
