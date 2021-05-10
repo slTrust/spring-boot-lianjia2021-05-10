@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.springframework</groupId>
@@ -8,12 +8,12 @@
     <version>0.1.0</version>
 
     <repositories>
-      <repository>
-          <id>alimaven</id>
-          <name>aliyun maven</name>
-          <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-      </repository>
-  </repositories>
+        <repository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -46,7 +46,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.16</version>
+            <version>8.0.15</version>
         </dependency>
 
         <dependency>
@@ -140,9 +140,9 @@
                                 <argument>--name</argument>
                                 <argument>test-mysql</argument>
                                 <argument>-e</argument>
-                                <argument>MYSQL_ROOT_PASSWORD=my-secret-pw</argument>
+                                <argument>MYSQL_ROOT_PASSWORD=root</argument>
                                 <argument>-e</argument>
-                                <argument>MYSQL_DATABASE=xdml</argument>
+                                <argument>MYSQL_DATABASE=lianjia</argument>
                                 <argument>-p</argument>
                                 <argument>3307:3306</argument>
                                 <argument>-d</argument>
@@ -192,9 +192,9 @@
                 <version>5.2.4</version>
                 <configuration>
                     <!-- 正式数据库 -->
-                    <url>jdbc:mysql://localhost:3306/xdml?useSSL=false&amp;allowPublicKeyRetrieval=true</url>
+                    <url>jdbc:mysql://localhost:3306/lianjia?useSSL=false&amp;allowPublicKeyRetrieval=true</url>
                     <user>root</user>
-                    <password>my-secret-pw</password>
+                    <password>root</password>
                 </configuration>
                 <executions>
                     <execution>
@@ -205,9 +205,9 @@
                         </goals>
                         <configuration>
                             <!-- 测试数据库  -->
-                            <url>jdbc:mysql://localhost:3307/xdml?useSSL=false&amp;allowPublicKeyRetrieval=true</url>
+                            <url>jdbc:mysql://localhost:3307/lianjia?useSSL=false&amp;allowPublicKeyRetrieval=true</url>
                             <user>root</user>
-                            <password>my-secret-pw</password>
+                            <password>root</password>
                         </configuration>
                     </execution>
                 </executions>

@@ -5,4 +5,4 @@ create table user(
   avatar varchar(100),
   created_at datetime,
   updated_at datetime
-)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;

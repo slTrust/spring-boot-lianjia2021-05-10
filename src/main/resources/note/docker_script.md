@@ -21,7 +21,7 @@ docker pull mysql:5.7.25
 # -p 3306:3306 监听客户端3306端口的内容，转发到容器的3306
 # -d docker daemon  启动一个后台进程运行
 
-docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -e MYSQL_DATABASE=xdml -p 3306:3306 -d mysql
+docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=lianjia -p 3306:3306 -d mysql
 ```
 
 ### idea里database连接数据库，新建表，和插入数据
@@ -47,7 +47,7 @@ create table user(
   avatar varchar(100),
   created_at datetime,
   updated_at datetime
-)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
 ```
 
 ### 修改数据库username约束
@@ -62,7 +62,7 @@ create table user(
   avatar varchar(100),
   created_at datetime,
   updated_at datetime
-)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
 ```
 
 ### 创建 Blog 表
@@ -76,7 +76,7 @@ create table blog(
   content TEXT,
   created_at datetime,
   updated_at datetime
-)
+)ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
 ```
 
 - `mvn flyway:migrate`
@@ -92,5 +92,4 @@ insert into blog(id,user_id,title,description,content,created_at,updated_at)
 values (3,2,'title3','desc1','content1',now(),now());
 insert into blog(id,user_id,title,description,content,created_at,updated_at)
 values (4,2,'title4','desc2','content2',now(),now());
-
 ```

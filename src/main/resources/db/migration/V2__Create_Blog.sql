@@ -6,4 +6,4 @@ create table blog(
   content TEXT,
   created_at datetime,
   updated_at datetime
-)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
