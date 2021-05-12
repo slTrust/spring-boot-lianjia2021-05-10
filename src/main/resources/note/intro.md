@@ -7,6 +7,8 @@
 - 目前仅支持查询 “天津”范围内的数据！！！
 - 目前仅支持查询 “天津”范围内的数据!!!
 - `area_code`,`street_code` 仅在城市范围内唯一，因为链家的顶级域名是 tj
+- 发现问题 河北/河东区都有 靖江路 `jingjianglu`
+    - 如果是 图谱则 最下一层code 返回为 `pcode + '_' + code`
 
 
 ```
@@ -177,6 +179,42 @@ http://localhost:8080/streets/nanshi
             ...
         ]
     }
+}
+```
+
+### 3.0 获取省区街关系图谱
+
+```
+http://localhost:8080/house_graph/tj
+
+{
+	"status": "ok",
+	"msg": "获取成功",
+	"data": {
+		"id": 1234,
+		"pid": null,
+		"name": "天津",
+		"code": "tj",
+		"pcode": null,
+		"value": 18,
+		"children": [{
+			"id": 1,
+			"pid": 1234,
+			"name": "和平",
+			"code": "heping",
+			"pcode": "tj",
+			"value": 6,
+			"children": [{
+				"id": 1,
+				"pid": 1,
+				"name": "南市",
+				"code": "heping_nanshi",
+				"pcode": "heping",
+				"value": 0,
+				"children": null
+			}]
+		}]
+	}
 }
 ```
 
