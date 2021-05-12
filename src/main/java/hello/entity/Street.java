@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.Instant;
 
-public class Area {
+public class Street {
     private long id;
-    private long cid;
+    private long aid;
     private String name;
     private String code;
     @JsonIgnore
@@ -14,21 +14,13 @@ public class Area {
     @JsonIgnore
     private Instant createdAt;
 
-    public Area(long id, long cid, String name, String code, Instant updatedAt, Instant createdAt) {
+    public Street(long id, long cid, String name, String code, Instant updatedAt, Instant createdAt) {
         this.id = id;
-        this.cid = cid;
+        this.aid = cid;
         this.name = name;
         this.code = code;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
-    }
-
-    public long getCid() {
-        return cid;
-    }
-
-    public void setCid(long cid) {
-        this.cid = cid;
     }
 
     public long getId() {
@@ -37,6 +29,14 @@ public class Area {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getAid() {
+        return aid;
+    }
+
+    public void setAid(long aid) {
+        this.aid = aid;
     }
 
     public String getName() {

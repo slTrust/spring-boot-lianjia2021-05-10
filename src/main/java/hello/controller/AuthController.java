@@ -1,6 +1,6 @@
 package hello.controller;
 
-import hello.entity.LoginResult;
+import hello.entity.result.LoginResult;
 import hello.entity.User;
 import hello.service.UserService;
 import org.springframework.dao.DuplicateKeyException;

@@ -39,13 +39,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // 使用内置的 AuthenticationManager 来鉴权
     @Bean
-    public AuthenticationManager customerAuthenticationManager() throws Exception{
+    public AuthenticationManager customerAuthenticationManager() throws Exception {
         return authenticationManager();
     }
 
     // 加密模块
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

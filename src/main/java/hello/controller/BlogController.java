@@ -1,6 +1,6 @@
 package hello.controller;
 
-import hello.entity.Result;
+import hello.entity.result.Result;
 import hello.service.BlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

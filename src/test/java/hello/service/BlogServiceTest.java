@@ -1,7 +1,7 @@
 package hello.service;
 
 import hello.dao.BlogDao;
-import hello.entity.Result;
+import hello.entity.result.Result;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 

@@ -1,4 +1,4 @@
-package hello.entity;
+package hello.entity.result;
 
 public abstract class Result<T> {
     String status;
@@ -10,7 +10,7 @@ public abstract class Result<T> {
 //    }
 
     protected Result(String status, String msg) {
-        this(status,msg,null);
+        this(status, msg, null);
     }
 
     protected Result(String status, String msg, T data) {

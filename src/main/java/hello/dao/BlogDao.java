@@ -18,18 +18,18 @@ public class BlogDao {
         this.sqlSession = sqlSession;
     }
 
-    public List<Blog> getBlogs(Integer page, Integer pageSize, Integer userId){
-        Map<String,Object> parameters = new HashMap<>();
-        parameters.put("user_id",userId);
-        parameters.put("offset",(page-1)*pageSize);
-        parameters.put("limit",pageSize);
-        return sqlSession.selectList("selectBlog",parameters);
+    public List<Blog> getBlogs(Integer page, Integer pageSize, Integer userId) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("user_id", userId);
+        parameters.put("offset", (page - 1) * pageSize);
+        parameters.put("limit", pageSize);
+        return sqlSession.selectList("selectBlog", parameters);
     }
 
-    public int count(Integer userId){
-        Map<String,Object> parameters = new HashMap<>();
-        parameters.put("user_id",userId);
-        return sqlSession.selectOne("countBlog",parameters);
+    public int count(Integer userId) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("user_id", userId);
+        return sqlSession.selectOne("countBlog", parameters);
     }
 }
 

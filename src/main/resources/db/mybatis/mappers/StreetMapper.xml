@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.StreetMapper">
+    <select id="selectStreetsByAid" resultType="hello.entity.Street">
+        SELECT
+        id,
+        aid,
+        name,
+        code,
+        created_at,
+        updated_at
+        FROM street
+        <if test="aid != null">
+            WHERE aid = #{aid}
+        </if>
+    </select>
+
+    <select id="selectStreets" resultType="hello.entity.Street">
+        SELECT
+        id,
+        aid,
+        name,
+        code,
+        created_at,
+        updated_at
+        FROM street
+    </select>
+
+
+</mapper>

@@ -8,5 +8,9 @@
     </settings>
     <mappers>
         <mapper resource="db/mybatis/mappers/BlogMapper.xml"/>
+        <mapper resource="db/mybatis/mappers/CityMapper.xml"/>
+        <mapper resource="db/mybatis/mappers/AreaMapper.xml"/>
+        <mapper resource="db/mybatis/mappers/StreetMapper.xml"/>
+        <mapper resource="db/mybatis/mappers/HouseMapper.xml"/>
     </mappers>
 </configuration>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.AreaMapper">
+    <select id="selectAreasByCid" resultType="hello.entity.Area">
+        SELECT
+        id,
+        cid,
+        name,
+        code,
+        created_at,
+        updated_at
+        FROM area
+        <if test="cid != null">
+            WHERE cid = #{cid}
+        </if>
+    </select>
+
+    <select id="selectAreas" resultType="hello.entity.Area">
+        SELECT id,
+               cid,
+               name,
+               code,
+               created_at,
+               updated_at
+        FROM area
+    </select>
+
+    <select id="selectAreaByCode" resultType="hello.entity.Area">
+        SELECT
+        id,
+        cid,
+        name,
+        code,
+        created_at,
+        updated_at
+        FROM area
+        <if test="code != null">
+            WHERE code = #{code}
+        </if>
+    </select>
+</mapper>
