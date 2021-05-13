@@ -133,4 +133,17 @@ public class HouseGraphService {
             return CommonResult.failure("查询失败");
         }
     }
+
+    public CommonResult getCityAreaHouseAvgMaxMinCount(String city_code){
+        try{
+            return CommonResult.newSingleResult(houseDao.getCityAreaHouseAvgMaxMinCount(city_code));
+        }catch (Exception e){
+            e.printStackTrace();
+            return CommonResult.failure("查询失败");
+        }
+    }
+
+
+
+
 }

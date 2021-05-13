@@ -19,8 +19,14 @@ public class HouseGraphController {
         this.houseGraphService = houseGraphService;
     }
 
-    @GetMapping("/{city_code}")
+    @GetMapping("/{city_code}/graph")
     public CommonResult x(@PathVariable("city_code") String city_code){
         return houseGraphService.getHouseGraphByCityCode(city_code);
     }
+
+    @GetMapping("/{city_code}/pie_area_house")
+    public CommonResult getCityAreaHouseAvgPrice(@PathVariable("city_code") String city_code){
+        return houseGraphService.getCityAreaHouseAvgMaxMinCount(city_code);
+    }
+
 }

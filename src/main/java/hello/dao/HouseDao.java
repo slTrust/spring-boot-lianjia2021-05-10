@@ -37,4 +37,11 @@ public class HouseDao {
         return sqlSession.selectList("selectHouseDistrictsInfoMapByCityCode",parameters);
     }
 
+    public List<Map<String,Object>> getCityAreaHouseAvgMaxMinCount(String city_code){
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("city_code",city_code);
+        return sqlSession.selectList("selectHouse_CityAreaHouseAvgMaxMinCount",parameters);
+    }
+
+
 }

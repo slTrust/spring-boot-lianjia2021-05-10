@@ -9,6 +9,12 @@
 - `area_code`,`street_code` 仅在城市范围内唯一，因为链家的顶级域名是 tj
 - 发现问题 河北/河东区都有 靖江路 `jingjianglu`
     - 如果是 图谱则 最下一层code 返回为 `pcode + '_' + code`
+
+#### 数据精准性问题以及说明
+
+- 由于我们是 逆推，先爬lj的数据，为了保证房屋的唯一性 city_code,area_code,street_code 才能确认一个房屋
+- city_code,area_code,street_code 就是 数据库设计里的 第二范式的 “码” [参考此处说明即可理解](https://sltrust.github.io/2019/06/11/Java-026-sql%E8%8C%83%E5%BC%8F/)
+
   
 ```
 // 和平的所有街道
@@ -36,6 +42,7 @@ https://tj.lianjia.com/ershoufang/guloujie/
 
 - 目前仅支持 “天津”
 ```aidl
+http://localhost:8080/cities/${city_code}/areas
 http://localhost:8080/cities/tj/areas
 
 {
@@ -56,6 +63,7 @@ http://localhost:8080/cities/tj/areas
 
 ### 1.1 获取单个城市 by code
 ```aidl
+http://localhost:8080/cities/${city_code}
 http://localhost:8080/cities/tj
 
 {
@@ -72,6 +80,7 @@ http://localhost:8080/cities/tj
 ### 1.2 获取某个城市的所有区
 
 ```
+http://localhost:8080/cities/${city_code}/areas
 http://localhost:8080/cities/tj/areas
 
 {
@@ -126,6 +135,7 @@ http://localhost:8080/areas
 ### 2.1 获取单个小区信息 通过code
 
 ```aidl
+http://localhost:8080/areas/${area_code}
 http://localhost:8080/areas/heping
 
 {
@@ -142,6 +152,7 @@ http://localhost:8080/areas/heping
 ### 2.2 获取某小区的所有街道
 
 ```
+http://localhost:8080/areas/${area_code}/streets
 http://localhost:8080/areas/heping/streets
 
 {
@@ -171,6 +182,7 @@ http://localhost:8080/areas/heping/streets
 # 所以 这里不用级联查询 
 # 所以 不用级联向上查询 对应区Area 
 # 所以 不用级联向上查询 和对应城市City
+http://localhost:8080/streets/${street_code}
 http://localhost:8080/streets/nanshi
 
 {
@@ -193,7 +205,8 @@ http://localhost:8080/streets/nanshi
 ### 3.0 获取省区街关系图谱
 
 ```
-http://localhost:8080/house_graph/tj
+http://localhost:8080/house_graph/${city_code}/graph
+http://localhost:8080/house_graph/tj/graph
 
 {
 	"status": "ok",
@@ -240,3 +253,19 @@ http://localhost:8080/house_graph/tj
 }
 ```
 
+### 3.1 聚合数据查询：饼图：市内六区，环城四区，其他区 各区二手房数量
+
+- 当前共18区
+- 先查询 app_house 表里 city='天津的code即 tj' 的区的 二手房数量
+- 最后根据 各区 code 进行分类聚合
+
+
+#### 科普
+
+- 天津市内六区分别是和平区、河北区、河东区、河西区、南开区、红桥区
+- 四郊分别是东丽区、西青区、津南区、北辰区。也叫 “环城四区”
+- 五县分别是武清区（武清县）、宝坻区（宝坻县）、静海区（静海县）、宁河区（宁河县）、蓟州区（蓟县）。 
+
+```
+
+```

@@ -8,8 +8,64 @@
         FROM app_house
         <where>
             <if test="city_code!=null">
-                 city=#{city_code}
+                city=#{city_code}
             </if>
         </where>
     </select>
+
+    <select id="selectHouse_CityAreaHouseCount" resultType="map">
+        SELECT
+        a.id as id,
+        a.name as name ,
+        h2.area as code,
+        h2.count as count
+        FROM
+        (
+        SELECT
+        h.area,
+        count(h.id) AS count
+        FROM
+        app_house AS h
+        <where>
+            <if test="city_code!=null">
+                city=#{city_code}
+            </if>
+        </where>
+        GROUP BY
+        h.area
+        ) AS h2
+        LEFT JOIN area AS a ON h2.area = a. CODE
+    </select>
+
+    <select id="selectHouse_CityAreaHouseAvgMaxMinCount" resultType="map">
+        SELECT
+        a.id AS id,
+        a. NAME AS name,
+        h2.count as count,
+        h2.area AS code,
+        h2.max_price AS max_price,
+        h2.min_price AS min_price,
+        h2.avg_price AS avg_price
+        FROM
+        (
+        SELECT
+        h.area,
+        count(h.area) as count,
+        max(h.square_metre_price) as max_price,
+        min(h.square_metre_price) as min_price,
+        avg(h.square_metre_price) AS avg_price
+        FROM
+        app_house AS h
+        <where>
+            <if test="city_code!=null">
+                city=#{city_code}
+            </if>
+        </where>
+        GROUP BY
+        h.area
+        ) AS h2
+        LEFT JOIN area AS a ON h2.area = a. CODE
+    </select>
+
+
 </mapper>
