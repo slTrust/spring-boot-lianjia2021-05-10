@@ -10,6 +10,7 @@ public final class NodeBuilder {
     private String pcode;
     private int value;
     private List<Node> children;
+    private Object raw;
 
     private NodeBuilder() {
     }
@@ -53,6 +54,11 @@ public final class NodeBuilder {
         return this;
     }
 
+    public NodeBuilder withRaw(Object raw) {
+        this.raw = raw;
+        return this;
+    }
+
     public Node build() {
         Node node = new Node();
         node.setId(id);
@@ -62,6 +68,7 @@ public final class NodeBuilder {
         node.setPcode(pcode);
         node.setValue(value);
         node.setChildren(children);
+        node.setRaw(raw);
         return node;
     }
 }

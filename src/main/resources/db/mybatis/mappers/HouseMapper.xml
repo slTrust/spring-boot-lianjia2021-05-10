@@ -3,13 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.mybatis.example.StreetMapper">
-    <select id="selectHouseDistrictsByStreetCode" resultType="String">
-        SELECT
-            DISTINCT district
+    <select id="selectHouseDistrictsInfoMapByCityCode" resultType="Map">
+        SELECT DISTINCT district,city,area,street
         FROM app_house
         <where>
-            <if test="street!=null">
-                 street=#{street}
+            <if test="city_code!=null">
+                 city=#{city_code}
             </if>
         </where>
     </select>

@@ -23,8 +23,15 @@ public class CityDao {
     }
 
     public City getCityByCode(String code) {
-        Map<String, Object> parametersCity = new HashMap<>();
-        parametersCity.put("code", code);
-        return sqlSession.selectOne("selectCityIdByCode", parametersCity);
+        Map<String, Object> params = new HashMap<>();
+        params.put("code", code);
+        return sqlSession.selectOne("selectCityIdByCode", params);
     }
+
+    public City getCityById(Long id) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        return sqlSession.selectOne("selectCityIdById", params);
+    }
+
 }

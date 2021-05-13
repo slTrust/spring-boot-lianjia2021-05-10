@@ -25,4 +25,17 @@
             WHERE code = #{code}
         </if>
     </select>
+    <select id="selectCityIdById" resultType="hello.entity.City">
+        SELECT
+        id,
+        name,
+        code,
+        created_at,
+        updated_at
+        FROM city
+        <if test="id != null">
+            WHERE id = #{id}
+        </if>
+    </select>
+
 </mapper>

@@ -19,13 +19,22 @@ public class HouseDao {
         this.sqlSession = sqlSession;
     }
 
+
+
+    public List<Street> getStreets(){
+        return sqlSession.selectList("selectStreets");
+    }
+
     public List<String> getStreetDistricts(String street_code){
         Map<String,Object> parameters = new HashMap<>();
         parameters.put("street",street_code);
         return sqlSession.selectList("selectHouseDistrictsByStreetCode",parameters);
     }
 
-    public List<Street> getStreets(){
-        return sqlSession.selectList("selectStreets");
+    public List<Map<String,Object>> getCityAreaStreetDistrictMapInfo(String city_code){
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("city_code",city_code);
+        return sqlSession.selectList("selectHouseDistrictsInfoMapByCityCode",parameters);
     }
+
 }

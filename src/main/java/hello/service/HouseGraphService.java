@@ -9,7 +9,11 @@ import hello.entity.result.CommonResult;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,6 +22,19 @@ public class HouseGraphService {
     private AreaDao areaDao;
     private StreetDao streetDao;
     private HouseDao houseDao;
+    /*
+       cityDistrictMap = {
+                            "tj":[
+                                {
+                                "district":"",
+                                "city":"",
+                                "area":"",
+                                "street":""
+                                }
+                            ]
+       }
+    */
+    private static Map<String,List<Map<String,Object>>> cityDistrictMap = new HashMap<>();
 
     @Inject
     public HouseGraphService(CityDao cityDao, AreaDao areaDao, StreetDao streetDao, HouseDao houseDao) {
@@ -34,6 +51,7 @@ public class HouseGraphService {
                 .withCode(city.getCode())
                 .withPcode(null)
                 .withChildren(null)
+                .withRaw(city)
                 .build();
     }
 
@@ -47,6 +65,7 @@ public class HouseGraphService {
 
     private Node formatAreasDataToNode(City city,Area area){
         List<Node> streets = buildStreetNode(area);
+        streets.forEach(street->street.setValue(getCityAreaStreetDistrictCount(city,area,street)));
         return NodeBuilder
                 .aNode()
                 .withId(area.getId())
@@ -56,7 +75,23 @@ public class HouseGraphService {
                 .withPcode(city.getCode())
                 .withChildren(streets)
                 .withValue(streets.size())
+                .withRaw(area)
                 .build();
+    }
+
+    private int getCityAreaStreetDistrictCount(City city, Area area, Node street) {
+        List<Map<String,Object>> currentCityDistricts = cityDistrictMap.get(city.getCode());
+        AtomicInteger count = new AtomicInteger();
+        currentCityDistricts.forEach(item->{
+            if(  Objects.equals(item.get("city"),city.getCode())
+                    && Objects.equals(item.get("area"),area.getCode())
+                    && Objects.equals(
+                            item.get("street")
+                            ,((Street)street.getRaw()).getCode())){
+                count.getAndIncrement();
+            }
+        });
+        return count.get();
     }
 
     private List<Node> buildStreetNode(Area area){
@@ -70,23 +105,32 @@ public class HouseGraphService {
                         .withCode(area.getCode() + '_'+ street.getCode())
                         .withPcode(area.getCode())
                         .withChildren(null)
+                        .withRaw(street)
                         .build())
                 .collect(Collectors.toList());
         return streetNode;
     }
 
+    private List<Map<String,Object>> getAllCityAreaStreetDistrictMapInfo(City city){
+        return houseDao.getCityAreaStreetDistrictMapInfo(city.getCode());
+    }
+
+    private Node setNodeData(City city){
+        Node root = buildRootCityNode(city);
+        List<Node> areasNode = buildAreasNode(city,areaDao.getCityAreas(city.getCode()));
+        root.setChildren(areasNode);
+        root.setValue(areasNode.size());
+        return root;
+    }
     public CommonResult getHouseGraphByCityCode(String city_code){
         try{
             City city = cityDao.getCityByCode(city_code);
-            Node root = buildRootCityNode(city);
-            List<Node> areasNode = buildAreasNode(city,areaDao.getCityAreas(city.getCode()));
-            root.setChildren(areasNode);
-            root.setValue(areasNode.size());
+            cityDistrictMap.put(city_code,getAllCityAreaStreetDistrictMapInfo(city));
+            Node root = setNodeData(city);
             return CommonResult.newSingleResult(root);
         }catch (Exception e){
             e.printStackTrace();
             return CommonResult.failure("查询失败");
         }
-
     }
 }

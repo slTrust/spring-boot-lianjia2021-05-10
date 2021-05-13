@@ -9,8 +9,7 @@
 - `area_code`,`street_code` 仅在城市范围内唯一，因为链家的顶级域名是 tj
 - 发现问题 河北/河东区都有 靖江路 `jingjianglu`
     - 如果是 图谱则 最下一层code 返回为 `pcode + '_' + code`
-
-
+  
 ```
 // 和平的所有街道
 https://tj.lianjia.com/ershoufang/heping/
@@ -23,6 +22,15 @@ https://tj.lianjia.com/ershoufang/nanshi/
 // 南开区 鼓楼街的所有房子
 https://tj.lianjia.com/ershoufang/guloujie/
 ```
+
+## 一些约定
+
+- bo 业务对象
+  - 用于 service 向 controller 传输数据的
+- vo 返回前端的 object
+- dto 前端传递过来的 object
+- dao 数据层向业务层返回的数据
+## 接口
 
 ### 1.0获取城市列表
 
@@ -208,12 +216,26 @@ http://localhost:8080/house_graph/tj
 				"id": 1,
 				"pid": 1,
 				"name": "南市",
+				// 这个地方 是 pcode + '_' + code 组成的 因为 河北 河东 都有靖江路 
+				// code重复 会导致 echarts 关系图谱 渲染渲染失效 因为图谱 唯一标识用的是 code
+				// 如果想看原始 code 通过 本节点对应的 raw 即可
 				"code": "heping_nanshi",
 				"pcode": "heping",
 				"value": 0,
 				"children": null
-			}]
-		}]
+			}],
+			raw: {
+              id: 1,
+              cid: 1234,
+              name: "和平",
+              code: "heping"
+            }
+		}],
+		raw: {
+          id: 1234,
+          name: "天津",
+          code: "tj"
+        }
 	}
 }
 ```

@@ -10,6 +10,7 @@ public class Node {
     private String pcode;
     private int value;
     private List<Node> children;
+    private Object raw;
 
     public Node() {
     }
@@ -70,4 +71,11 @@ public class Node {
         this.pcode = pcode;
     }
 
+    public Object getRaw() {
+        return raw;
+    }
+
+    public void setRaw(Object raw) {
+        this.raw = raw;
+    }
 }
