@@ -21,14 +21,4 @@ public class StreetService {
     public CommonResult getStreets() {
         return CommonResult.newListResult(streetDao.getStreets());
     }
-
-    public CommonResult getStreetDistricts(String street_code) {
-        try {
-            return CommonResult.newListResult(houseDao.getStreetDistricts(street_code));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return CommonResult.failure("系统异常");
-        }
-    }
-
 }

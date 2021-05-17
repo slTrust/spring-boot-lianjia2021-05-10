@@ -67,5 +67,63 @@
         LEFT JOIN area AS a ON h2.area = a. CODE
     </select>
 
+    <select id="selectHouse_CityAreaStreetHouseAvgMaxMinCount" resultType="map">
+        SELECT
+        s.id AS id,
+        s. NAME AS name,
+        h2.count AS count,
+        h2.street AS code,
+        h2.max_price AS max_price,
+        h2.min_price AS min_price,
+        h2.avg_price AS avg_price
+        FROM
+        (
+        SELECT
+        h.street,
+        count(h.street) AS count,
+        max(h.square_metre_price) AS max_price,
+        min(h.square_metre_price) AS min_price,
+        avg(h.square_metre_price) AS avg_price
+        FROM
+        app_house AS h
+        <where>
+            <if test="city_code!=null">
+                city=#{city_code}
+            </if>
+            <if test="area_code!=null">
+                and area=#{area_code}
+            </if>
+        </where>
+        GROUP BY
+        h.street
+        ) AS h2
+        LEFT JOIN street AS s ON h2.street = s.code
+    </select>
 
+    <select id="selectHouse_CityAreaStreetDistrictHouseAvgMaxMinCount" resultType="map">
+        SELECT
+        h.city,
+        h.area,
+        h.street,
+        h.district,
+        count(h.district) AS count,
+        max(h.square_metre_price) AS max_price,
+        min(h.square_metre_price) AS min_price,
+        avg(h.square_metre_price) AS avg_price
+        FROM
+        app_house AS h
+        <where>
+            <if test="city_code!=null">
+                city=#{city_code}
+            </if>
+            <if test="area_code!=null">
+                and area=#{area_code}
+            </if>
+            <if test="street_code!=null">
+                and street=#{street_code}
+            </if>
+        </where>
+        GROUP BY
+        h.district
+    </select>
 </mapper>

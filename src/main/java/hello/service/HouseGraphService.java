@@ -143,6 +143,25 @@ public class HouseGraphService {
         }
     }
 
+    public CommonResult getCityAreaStreetHouseAvgMaxMinCount(String city_code,String area_code){
+        try{
+            return CommonResult.newSingleResult(houseDao.getCityAreaStreetHouseAvgMaxMinCount(city_code,area_code));
+        }catch (Exception e){
+            e.printStackTrace();
+            return CommonResult.failure("查询失败");
+        }
+    }
+
+
+
+    public CommonResult getCityAreaStreetDistrictHouseAvgMaxMinCount(String city_code,String area_code,String street_code){
+        try{
+            return CommonResult.newSingleResult(houseDao.getCityAreaStreetDistrictHouseAvgMaxMinCount(city_code,area_code,street_code));
+        }catch (Exception e){
+            e.printStackTrace();
+            return CommonResult.failure("查询失败");
+        }
+    }
 
 
 

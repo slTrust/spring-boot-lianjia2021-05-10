@@ -24,9 +24,4 @@ public class StreetController {
     public CommonResult getStreets() {
         return streetService.getStreets();
     }
-
-    @GetMapping("/{street_code}")
-    public CommonResult getStreetDistricts(@PathVariable("street_code") String street_code) {
-        return streetService.getStreetDistricts(street_code);
-    }
 }

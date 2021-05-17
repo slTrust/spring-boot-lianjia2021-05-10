@@ -19,16 +19,8 @@ public class HouseDao {
         this.sqlSession = sqlSession;
     }
 
-
-
     public List<Street> getStreets(){
         return sqlSession.selectList("selectStreets");
-    }
-
-    public List<String> getStreetDistricts(String street_code){
-        Map<String,Object> parameters = new HashMap<>();
-        parameters.put("street",street_code);
-        return sqlSession.selectList("selectHouseDistrictsByStreetCode",parameters);
     }
 
     public List<Map<String,Object>> getCityAreaStreetDistrictMapInfo(String city_code){
@@ -42,6 +34,25 @@ public class HouseDao {
         parameters.put("city_code",city_code);
         return sqlSession.selectList("selectHouse_CityAreaHouseAvgMaxMinCount",parameters);
     }
+
+    public List<Map<String,Object>> getCityAreaStreetHouseAvgMaxMinCount(String city_code,String area_code){
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("city_code",city_code);
+        parameters.put("area_code",area_code);
+        return sqlSession.selectList("selectHouse_CityAreaStreetHouseAvgMaxMinCount",parameters);
+    }
+
+    public List<Map<String,Object>> getCityAreaStreetDistrictHouseAvgMaxMinCount(String city_code,String area_code,String street_code){
+        Map<String,Object> parameters = new HashMap<>();
+        parameters.put("city_code",city_code);
+        parameters.put("area_code",area_code);
+        parameters.put("street_code",street_code);
+        return sqlSession.selectList("selectHouse_CityAreaStreetDistrictHouseAvgMaxMinCount",parameters);
+    }
+
+
+
+
 
 
 }
